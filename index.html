@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--Booking Section-->
+    <main class="main-content container">
+       <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+        </div>
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="fClass-value" class="inp-style inp-width" type="text" class="form-control" value="0" disabled>
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="fClass-btn-plus" class="btn btn-danger"><i class="fas fa-plus"></i>+</i></button>
+                    <button id="fClass-btn-minus" class="btn btn-default btn-lg"><i class="fas fa-minus">-</i></button>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="eClass-value" class="inp-style inp-width" type="text" class="form-control" value="0" disabled>
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="eClass-btn-plus" class="btn btn-default btn-lg"><i class="fas fa-plus">+</i></button>
+                    <button id="eClass-btn-minus" class="btn btn-default btn-lg"><i class="fas fa-minus">-</i></button>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="subtotal-value">$0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="tax-amount">$0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="total-amount">$0</p>
+                    </div>
+                </div>
+            </div>
+            <button id="login" class="btn-style">Book Now</button>
+        </div>
+    </section>
+    </main> 
+   <script>
+       //First Class Event Handler
+         document.getElementById("fClass-btn-plus").addEventListener("click", function(){
+            fClassElementChange(true);
+         });
+         document.getElementById("fClass-btn-minus").addEventListener("click", function(){
+            fClassElementChange(false);
+         });
+         function fClassElementChange(isIncrease){
+            const caseInput = document.getElementById("fClass-value");
+            const numberCount = parseInt(caseInput.value);
+            let numberNewCount = numberCount;
+            if (isIncrease == true) {
+               numberNewCount = numberNewCount + 1;
+            }
+            if (isIncrease == false && numberCount > 0) {
+               numberNewCount = numberCount - 1;
+            }
+            caseInput.value = numberNewCount;
+            const total = numberNewCount * 150
+            document.getElementById("subtotal-value").innerText = '$'+ total;
+            calculateTotal();
+         }
+         //Economy Class Event Handler
+         document.getElementById("eClass-btn-plus").addEventListener("click", function(){
+            eClassElementChange(true);
+         });
+         document.getElementById("eClass-btn-minus").addEventListener("click", function(){
+            eClassElementChange(false);
+         });
+         function eClassElementChange(isIncrease){
+            const caseInput = document.getElementById("eClass-value");
+            const numberCount = parseInt(caseInput.value);
+            let numberNewCount = numberCount;
+            if (isIncrease == true) {
+               numberNewCount = numberNewCount + 1;
+            }
+            if (isIncrease == false && numberCount > 0) {
+               numberNewCount = numberCount - 1;
+            }
+            caseInput.value = numberNewCount;
+            const total = numberNewCount * 150
+            document.getElementById("subtotal-value").innerText = '$'+ total;
+            calculateTotal();
+         }
+         //Calculation
+         function calculateTotal(){
+            const fClassInput = document.getElementById("fClass-value");
+            const fClassCount = parseInt(fClassInput.value);
+
+            const eClassInput = document.getElementById("eClass-value");
+            const eClassCount = parseInt(eClassInput.value);
+
+            const totalPrice = fClassCount * 150 + eClassCount * 100;
+            document.getElementById("subtotal-value").innerText = "$" + totalPrice;
+         
+            const tax = Math.round(totalPrice * 0.1);
+            document.getElementById("tax-amount").innerText = "$" + tax;
+         
+            const grandTotal = totalPrice + tax;
+            document.getElementById("total-amount").innerText = "$" + grandTotal;}
+    </script>
+</body>
+</html>
